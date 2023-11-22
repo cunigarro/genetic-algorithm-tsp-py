@@ -1,5 +1,5 @@
-from telnetlib import GA
 from libs.city import City
+from libs.genetic_algorithm import GeneticAlgorithm
 from libs.population import Population
 from libs.tour_manager import TourManager
 
@@ -91,9 +91,9 @@ for location in locations:
     TourManager.add_city(city)
 
 pop = Population(50, True)
-print('Initial distance: ' + pop.get_fittest().get_distance())
+print(f'Initial distance: {pop.get_fittest().get_distance()}')
 
-pop = GA.evolve_population(pop)
+pop = GeneticAlgorithm.evolve_population(pop)
 for i in range(100):
     pop = GA.evolve_population(pop)
 

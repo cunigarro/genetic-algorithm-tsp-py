@@ -14,10 +14,10 @@ class City:
         self.y = y
 
     def get_x(self):
-        pass
+        return self.x
 
     def get_y(self):
-        pass
+        return self.y
 
     def distance_to(self, city):
         x_distance = abs(self.get_x() - city.get_x())

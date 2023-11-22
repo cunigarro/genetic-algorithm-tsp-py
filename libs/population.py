@@ -9,9 +9,10 @@ class Population:
         self.tours = [None] * population_size
 
         if initialise:
-            for item in range(self.population_size()):
+            for index in range(self.population_size()):
                 new_tour = Tour()
                 new_tour.generate_individual()
+                self.save_tour(index, new_tour)
 
     def save_tour(self, index, tour):
         self.tours[index] = tour
