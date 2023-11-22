@@ -1,4 +1,6 @@
+from telnetlib import GA
 from libs.city import City
+from libs.population import Population
 from libs.tour_manager import TourManager
 
 locations = [
@@ -87,5 +89,12 @@ locations = [
 for location in locations:
     city = City(location['x'], location['y'])
     TourManager.add_city(city)
+
+pop = Population(50, True)
+print('Initial distance: ' + pop.get_fittest().get_distance())
+
+pop = GA.evolve_population(pop)
+for i in range(100):
+    pop = GA.evolve_population(pop)
 
 print(TourManager.number_of_cities())
