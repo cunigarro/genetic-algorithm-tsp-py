@@ -1,4 +1,5 @@
 from libs.city import City
+from libs.tour_manager import TourManager
 
 locations = [
     {
@@ -85,5 +86,6 @@ locations = [
 
 for location in locations:
     city = City(location['x'], location['y'])
+    TourManager.add_city(city)
 
-print(city)
+print(TourManager.number_of_cities())
