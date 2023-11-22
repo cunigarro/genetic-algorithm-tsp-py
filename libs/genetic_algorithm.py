@@ -1,3 +1,4 @@
+from random import randint
 from libs.population import Population
 
 
@@ -26,8 +27,15 @@ class GeneticAlgorithm:
 
         return new_population
 
-    def tournament_selection(self):
-        pass
+    def tournament_selection(self, pop: Population):
+        tournament = Population(self.tournament_size, False)
+
+        for index in range(self.tournament_size()):
+            random_id = randint(pop.population_size())
+            tournament.save_tour(index, pop.get_tour(random_id))
+
+        fittest = tournament.get_fittest()
+        return fittest
 
     def crossover(self):
         pass
