@@ -22,10 +22,10 @@ class GeneticAlgorithm:
             parent_2 = GeneticAlgorithm.tournament_selection(pop)
 
             child = GeneticAlgorithm.crossover(parent_1, parent_2)
-            new_population.save_tour(index, child)
+            new_population.save_tour(index - 1, child)
 
         for index in range(elitism_offset, new_population.population_size()):
-            GeneticAlgorithm.mutate(new_population.get_tour(index))
+            GeneticAlgorithm.mutate(new_population.get_tour(index - 1))
 
         return new_population
 
@@ -35,7 +35,7 @@ class GeneticAlgorithm:
 
         for index in range(GeneticAlgorithm.tournament_size):
             random_id = randint(0, pop.population_size())
-            tournament.save_tour(index, pop.get_tour(random_id))
+            tournament.save_tour(index - 1, pop.get_tour(random_id - 1))
 
         fittest = tournament.get_fittest()
         return fittest
@@ -65,7 +65,7 @@ class GeneticAlgorithm:
 
     @staticmethod
     def mutate(tour: Tour):
-        for tour_pos_1 in tour.tour_size():
+        for tour_pos_1 in range(tour.tour_size()):
             if randint(0, 1) < GeneticAlgorithm.mutation_rate:
                 tour_pos_2 = randint(0, tour.tour_size())
 
