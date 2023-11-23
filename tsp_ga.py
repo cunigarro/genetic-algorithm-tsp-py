@@ -95,6 +95,6 @@ print(f'Initial distance: {pop.get_fittest().get_distance()}')
 
 pop = GeneticAlgorithm.evolve_population(pop)
 for i in range(100):
-    pop = GA.evolve_population(pop)
+    pop = GeneticAlgorithm.evolve_population(pop)
 
 print(TourManager.number_of_cities())
