@@ -88,7 +88,7 @@ locations = [
 ]
 
 fittest_vals = []
-iterations = 200
+iterations = 100
 population = 50
 initial_distance = 0
 
@@ -137,8 +137,8 @@ axs[1].yaxis.set_major_locator(plt.MultipleLocator(20))
 axs[1].legend()
 
 # Información detallada
-axs[0].text(0, -0.2, f'Initial distance: {initial_distance}', ha='left', va='center', fontsize=10, transform=axs[0].transAxes)
-axs[0].text(0, -0.28, f'Final distance: {pop.get_fittest().get_distance()}', ha='left', va='center', fontsize=10, transform=axs[0].transAxes)
+axs[0].text(0, -0.2, f'Distancia inicial: {initial_distance}', ha='left', va='center', fontsize=10, transform=axs[0].transAxes)
+axs[0].text(0, -0.28, f'Distancia final: {pop.get_fittest().get_distance()}', ha='left', va='center', fontsize=10, transform=axs[0].transAxes)
 
 """ chunks = [best_tour[i:i+4] for i in range(0, len(best_tour), 4)]
 str_tour = '\n'.join([' '.join([f"[{location.get_x()}, {location.get_y()}]" for location in chunk]) for chunk in chunks]) """
