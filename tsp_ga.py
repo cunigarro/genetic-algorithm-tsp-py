@@ -88,16 +88,18 @@ locations = [
 ]
 
 fittest_vals = []
+iterations = 100
+population = 50
 
 for location in locations:
     city = City(location['x'], location['y'])
     TourManager.add_city(city)
 
-pop = Population(50, True)
+pop = Population(population, True)
 print(f'Initial distance: {pop.get_fittest().get_distance()}')
 
 pop = GeneticAlgorithm.evolve_population(pop)
-for i in range(100):
+for i in range(iterations):
     pop = GeneticAlgorithm.evolve_population(pop)
     fittest_vals.append(pop.get_fittest().get_distance())
 
@@ -107,7 +109,7 @@ print('Solution:')
 print(pop.get_fittest())
 
 # Datos para el primer gráfico
-generations = [i for i in range(1, 101)]
+generations = [i for i in range(0, iterations)]
 
 # Datos para el segundo gráfico
 x_coords = [location['x'] for location in locations]
