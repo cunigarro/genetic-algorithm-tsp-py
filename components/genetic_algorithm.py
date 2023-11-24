@@ -10,8 +10,8 @@ class GeneticAlgorithm:
 
     @staticmethod
     def evolve_population(pop: Population):
-        population_size = 40
-        new_population = Population(population_size, False)
+        population_size = 25
+        new_population = Population(population_size, True)
 
         elitism_offset = 0
         if GeneticAlgorithm.elitism:
@@ -19,18 +19,22 @@ class GeneticAlgorithm:
             elitism_offset = 1
 
         for index in range(elitism_offset, population_size):
+            GeneticAlgorithm.mutate(pop.get_tour(index))
+
+        population_crossover = Population(25, False)
+
+        for index in range(0, 25):
             parent_1 = GeneticAlgorithm.tournament_selection(pop)
             parent_2 = GeneticAlgorithm.tournament_selection(pop)
 
             child = GeneticAlgorithm.crossover(parent_1, parent_2)
-            new_population.save_tour(index, child)
+            population_crossover.save_tour(index, child)
 
-        for index in range(elitism_offset, population_size):
-            GeneticAlgorithm.mutate(new_population.get_tour(index))
+        new_population.tours += population_crossover.tours
 
-        diverse_population = Population(10, True)
+        """ diverse_population = Population(10, True)
 
-        new_population.tours += diverse_population.tours
+        new_population.tours += diverse_population.tours """
 
         return new_population
 
