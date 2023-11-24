@@ -22,7 +22,7 @@ class Population:
 
     def get_fittest(self) -> Tour:
         fittest: Tour = self.tours[0]
-        for index in range(self.population_size()):
+        for index in range(self.population_size()-1):
             if fittest.get_fitness() <= self.get_tour(index).get_fitness():
                 fittest = self.get_tour(index)
 
