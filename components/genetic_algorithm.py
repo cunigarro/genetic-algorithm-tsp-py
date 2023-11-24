@@ -1,6 +1,6 @@
 from random import randint, random
-from libs.population import Population
-from libs.tour import Tour
+from components.population import Population
+from components.tour import Tour
 
 
 class GeneticAlgorithm:

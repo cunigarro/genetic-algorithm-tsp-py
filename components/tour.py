@@ -1,5 +1,5 @@
 import random
-from libs.tour_manager import TourManager
+from components.tour_manager import TourManager
 
 
 class Tour:

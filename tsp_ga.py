@@ -1,7 +1,7 @@
-from libs.city import City
-from libs.genetic_algorithm import GeneticAlgorithm
-from libs.population import Population
-from libs.tour_manager import TourManager
+from components.city import City
+from components.genetic_algorithm import GeneticAlgorithm
+from components.population import Population
+from components.tour_manager import TourManager
 
 locations = [
     {

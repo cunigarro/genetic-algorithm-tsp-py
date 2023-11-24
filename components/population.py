@@ -1,4 +1,4 @@
-from libs.tour import Tour
+from components.tour import Tour
 
 
 class Population:
