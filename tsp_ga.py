@@ -2,6 +2,7 @@ from components.city import City
 from components.genetic_algorithm import GeneticAlgorithm
 from components.population import Population
 from components.tour_manager import TourManager
+import matplotlib.pyplot as plt
 
 locations = [
     {
@@ -86,6 +87,8 @@ locations = [
     },
 ]
 
+fittest_vals = []
+
 for location in locations:
     city = City(location['x'], location['y'])
     TourManager.add_city(city)
@@ -96,8 +99,13 @@ print(f'Initial distance: {pop.get_fittest().get_distance()}')
 pop = GeneticAlgorithm.evolve_population(pop)
 for i in range(100):
     pop = GeneticAlgorithm.evolve_population(pop)
+    fittest_vals.append(pop.get_fittest().get_distance())
 
-print('Finished');
-print(f'Final distance: {pop.get_fittest().get_distance()}');
-print('Solution:');
-print(pop.get_fittest());
+print('Finished')
+print(f'Final distance: {pop.get_fittest().get_distance()}')
+print('Solution:')
+print(pop.get_fittest())
+
+fig, ax = plt.subplots()
+ax.plot([i for i in range(1, 101)], fittest_vals)
+plt.show()
