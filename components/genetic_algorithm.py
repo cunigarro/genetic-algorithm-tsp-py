@@ -19,24 +19,24 @@ class GeneticAlgorithm:
             elitism_offset = 1
 
 
+        for index in range(0, 50):
+            GeneticAlgorithm.mutate(pop.get_tour(index))
+
         for index in range(elitism_offset, population_size):
+            random_id = randint(0, 49)
+            new_population.save_tour(index, pop.get_tour(random_id))
+
+
+        population_crossover = Population(population_size, False)
+
+        for index in range(0, population_size):
             parent_1 = GeneticAlgorithm.tournament_selection(pop)
             parent_2 = GeneticAlgorithm.tournament_selection(pop)
 
             child = GeneticAlgorithm.crossover(parent_1, parent_2)
-            new_population.save_tour(index, child)
+            population_crossover.save_tour(index, child)
 
-
-        population_mutation = Population(population_size, False)
-
-        for index in range(0, 50):
-            GeneticAlgorithm.mutate(pop.get_tour(index))
-
-        for index in range(0, population_size):
-            random_id = randint(0, 49)
-            population_mutation.save_tour(index, pop.get_tour(random_id))
-
-        new_population.tours += population_mutation.tours
+        new_population.tours += population_crossover.tours
 
 
         diverse_population = Population(20, True)
