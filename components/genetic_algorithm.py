@@ -1,7 +1,7 @@
 from random import randint, random
 from components.population import Population
 from components.tour import Tour
-
+import copy
 
 class GeneticAlgorithm:
     mutation_rate = 0.015
@@ -10,7 +10,7 @@ class GeneticAlgorithm:
 
     @staticmethod
     def evolve_population(pop: Population):
-        population_size = 25
+        population_size = 15
         new_population = Population(population_size, True)
 
         elitism_offset = 0
@@ -18,23 +18,31 @@ class GeneticAlgorithm:
             new_population.save_tour(0, pop.get_fittest())
             elitism_offset = 1
 
+
         for index in range(elitism_offset, population_size):
-            GeneticAlgorithm.mutate(pop.get_tour(index))
-
-        population_crossover = Population(25, False)
-
-        for index in range(0, 25):
             parent_1 = GeneticAlgorithm.tournament_selection(pop)
             parent_2 = GeneticAlgorithm.tournament_selection(pop)
 
             child = GeneticAlgorithm.crossover(parent_1, parent_2)
-            population_crossover.save_tour(index, child)
+            new_population.save_tour(index, child)
 
-        new_population.tours += population_crossover.tours
 
-        """ diverse_population = Population(10, True)
+        population_mutation = Population(population_size, False)
 
-        new_population.tours += diverse_population.tours """
+        for index in range(0, 50):
+            GeneticAlgorithm.mutate(pop.get_tour(index))
+
+        for index in range(0, population_size):
+            random_id = randint(0, 49)
+            population_mutation.save_tour(index, pop.get_tour(random_id))
+
+        new_population.tours += population_mutation.tours
+
+
+        diverse_population = Population(20, True)
+
+        new_population.tours += diverse_population.tours
+
 
         return new_population
 
