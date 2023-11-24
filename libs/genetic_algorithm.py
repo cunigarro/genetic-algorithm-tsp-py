@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, random
 from libs.population import Population
 from libs.tour import Tour
 
@@ -22,10 +22,10 @@ class GeneticAlgorithm:
             parent_2 = GeneticAlgorithm.tournament_selection(pop)
 
             child = GeneticAlgorithm.crossover(parent_1, parent_2)
-            new_population.save_tour(index - 1, child)
+            new_population.save_tour(index, child)
 
         for index in range(elitism_offset, new_population.population_size()):
-            GeneticAlgorithm.mutate(new_population.get_tour(index - 1))
+            GeneticAlgorithm.mutate(new_population.get_tour(index))
 
         return new_population
 
@@ -34,8 +34,8 @@ class GeneticAlgorithm:
         tournament = Population(GeneticAlgorithm.tournament_size, False)
 
         for index in range(GeneticAlgorithm.tournament_size):
-            random_id = randint(0, pop.population_size())
-            tournament.save_tour(index - 1, pop.get_tour(random_id - 1))
+            random_id = randint(0, pop.population_size() - 1)
+            tournament.save_tour(index, pop.get_tour(random_id))
 
         fittest = tournament.get_fittest()
         return fittest
@@ -44,21 +44,24 @@ class GeneticAlgorithm:
     def crossover(parent_1: Tour, parent_2: Tour):
         child = Tour()
 
-        start_pos = randint(0, parent_1.tour_size())
-        end_pos = randint(0, parent_1.tour_size())
+        start_pos = randint(0, parent_1.tour_size() - 1)
+        end_pos = randint(0, parent_1.tour_size() - 1)
 
-        for index in range(child.tour_size()):
-            if start_pos < end_pos and index > start_pos and index < end_pos:
-                child.set_city(index, parent_1.get_city(index))
+        while start_pos == end_pos:
+            end_pos = randint(0, parent_1.tour_size() - 1)
+
+        for i in range(child.tour_size()):
+            if start_pos < end_pos and i > start_pos and i < end_pos:
+                child.set_city(i, parent_1.get_city(i))
             elif start_pos > end_pos:
-                if (index < start_pos and index > end_pos) is False:
-                    child.set_city(index, parent_1.get_city(index))
+                if not (i < start_pos and i > end_pos):
+                    child.set_city(i, parent_1.get_city(i))
 
-        for index in range(parent_2.tour_size()):
-            if child.contains_city(parent_2.get_city(index)) is False:
-                for index_2 in range(child.tour_size()):
-                    if child.get_city(index_2) == None:
-                        child.set_city(index_2, parent_2.get_city(index))
+        for i in range(parent_2.tour_size()):
+            if not child.contains_city(parent_2.get_city(i)):
+                for ii in range(child.tour_size()):
+                    if child.get_city(ii) is None:
+                        child.set_city(ii, parent_2.get_city(i))
                         break
 
         return child
@@ -66,8 +69,8 @@ class GeneticAlgorithm:
     @staticmethod
     def mutate(tour: Tour):
         for tour_pos_1 in range(tour.tour_size()):
-            if randint(0, 1) < GeneticAlgorithm.mutation_rate:
-                tour_pos_2 = randint(0, tour.tour_size())
+            if random() < GeneticAlgorithm.mutation_rate:
+                tour_pos_2 = randint(0, tour.tour_size() - 1)
 
                 city_1 = tour.get_city(tour_pos_1)
                 city_2 = tour.get_city(tour_pos_2)

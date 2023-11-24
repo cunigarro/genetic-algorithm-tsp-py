@@ -19,10 +19,10 @@ class Tour:
         random.shuffle(self.tour)
 
     def get_city(self, tour_position):
-        return self.tour[tour_position - 1]
+        return self.tour[tour_position]
 
     def set_city(self, tour_position, city):
-        self.tour[tour_position - 1] = city
+        self.tour[tour_position] = city
         self.fitness = 0
         self.distance = 0
 

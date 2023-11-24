@@ -97,4 +97,7 @@ pop = GeneticAlgorithm.evolve_population(pop)
 for i in range(100):
     pop = GeneticAlgorithm.evolve_population(pop)
 
-print(TourManager.number_of_cities())
+print('Finished');
+print(f'Final distance: {pop.get_fittest().get_distance()}');
+print('Solution:');
+print(pop.get_fittest());
