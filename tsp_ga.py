@@ -90,23 +90,19 @@ locations = [
 fittest_vals = []
 iterations = 100
 population = 50
+initial_distance = 0
 
 for location in locations:
     city = City(location['x'], location['y'])
     TourManager.add_city(city)
 
 pop = Population(population, True)
-print(f'Initial distance: {pop.get_fittest().get_distance()}')
+initial_distance = pop.get_fittest().get_distance()
 
 pop = GeneticAlgorithm.evolve_population(pop)
 for i in range(iterations):
     pop = GeneticAlgorithm.evolve_population(pop)
     fittest_vals.append(pop.get_fittest().get_distance())
-
-print('Finished')
-print(f'Final distance: {pop.get_fittest().get_distance()}')
-print('Solution:')
-print(pop.get_fittest())
 
 # Datos para el primer gráfico
 generations = [i for i in range(0, iterations)]
@@ -120,7 +116,7 @@ best_tour = pop.get_fittest().tour
 x_lines = [location.get_x() for location in best_tour]
 y_lines = [location.get_y() for location in best_tour]
 
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+fig, axs = plt.subplots(1, 2, figsize=(12, 6))
 
 # Primer gráfico: Comportamiento del algoritmo
 axs[0].plot(generations, fittest_vals)
@@ -129,8 +125,9 @@ axs[0].set_xlabel('Generaciones')
 axs[0].set_ylabel('Mejor valor fitness')
 
 # Segundo gráfico: Recorrido del viajero
-axs[1].scatter(x_coords, y_coords, color='red', marker='o', label='Ciudades')
-axs[1].plot(x_lines + [x_lines[0]], y_lines + [y_lines[0]], color='blue', linestyle='-', linewidth=2, label='Recorrido')
+axs[1].plot(x_lines + [x_lines[0]], y_lines + [y_lines[0]], color='blue', linestyle='-', linewidth=2, label='Recorrido', zorder=1)
+axs[1].scatter(x_coords, y_coords, color='red', marker='o', label='Ciudades', zorder=2)
+axs[1].scatter(x_coords[0], y_coords[0], color='green', marker='o', label='Inicio', zorder=3)
 axs[1].set_title('Recorrido del viajero')
 axs[1].set_xlabel('Eje x')
 axs[1].set_ylabel('Eje y')
@@ -138,6 +135,16 @@ axs[1].grid(which='both', linestyle='--', linewidth=0.5)
 axs[1].xaxis.set_major_locator(plt.MultipleLocator(20))
 axs[1].yaxis.set_major_locator(plt.MultipleLocator(20))
 axs[1].legend()
+
+# Información detallada
+axs[0].text(0, -0.2, f'Distancia inicial: {initial_distance}', ha='left', va='center', fontsize=10, transform=axs[0].transAxes)
+axs[0].text(0, -0.28, f'Distancia final: {pop.get_fittest().get_distance()}', ha='left', va='center', fontsize=10, transform=axs[0].transAxes)
+
+""" chunks = [best_tour[i:i+4] for i in range(0, len(best_tour), 4)]
+str_tour = '\n'.join([' '.join([f"[{location.get_x()}, {location.get_y()}]" for location in chunk]) for chunk in chunks]) """
+
+""" str_tour = [{location.get_x(), location.get_y()} for location in best_tour]
+axs[0].text(0, -0.5, f'Solution:\n{str_tour}', ha='left', va='center', fontsize=8, transform=axs[0].transAxes) """
 
 plt.tight_layout()
 
