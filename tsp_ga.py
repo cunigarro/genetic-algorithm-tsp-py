@@ -106,6 +106,37 @@ print(f'Final distance: {pop.get_fittest().get_distance()}')
 print('Solution:')
 print(pop.get_fittest())
 
-fig, ax = plt.subplots()
-ax.plot([i for i in range(1, 101)], fittest_vals)
+# Datos para el primer gráfico
+generations = [i for i in range(1, 101)]
+
+# Datos para el segundo gráfico
+x_coords = [location['x'] for location in locations]
+y_coords = [location['y'] for location in locations]
+
+best_tour = pop.get_fittest().tour
+
+x_lines = [location.get_x() for location in best_tour]
+y_lines = [location.get_y() for location in best_tour]
+
+fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+
+# Primer gráfico: Comportamiento del algoritmo
+axs[0].plot(generations, fittest_vals)
+axs[0].set_title('Mejora de los individuos')
+axs[0].set_xlabel('Generaciones')
+axs[0].set_ylabel('Mejor valor fitness')
+
+# Segundo gráfico: Recorrido del viajero
+axs[1].scatter(x_coords, y_coords, color='red', marker='o', label='Ciudades')
+axs[1].plot(x_lines + [x_lines[0]], y_lines + [y_lines[0]], color='blue', linestyle='-', linewidth=2, label='Recorrido')
+axs[1].set_title('Recorrido del viajero')
+axs[1].set_xlabel('Eje x')
+axs[1].set_ylabel('Eje y')
+axs[1].grid(which='both', linestyle='--', linewidth=0.5)
+axs[1].xaxis.set_major_locator(plt.MultipleLocator(20))
+axs[1].yaxis.set_major_locator(plt.MultipleLocator(20))
+axs[1].legend()
+
+plt.tight_layout()
+
 plt.show()
