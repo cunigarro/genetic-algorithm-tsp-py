@@ -29,7 +29,7 @@ class GeneticAlgorithm:
 
         population_mutation = Population(population_size, False)
 
-        for index in range(0, 50):
+        for index in range(elitism_offset, 50):
             GeneticAlgorithm.mutate(pop.get_tour(index))
 
         for index in range(0, population_size):
