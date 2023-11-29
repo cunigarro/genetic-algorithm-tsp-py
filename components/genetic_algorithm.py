@@ -19,13 +19,12 @@ class GeneticAlgorithm:
             elitism_offset = 1
 
 
-        for index in range(0, 50):
-            GeneticAlgorithm.mutate(pop.get_tour(index))
+        for index in range(elitism_offset, population_size):
+            GeneticAlgorithm.mutate(new_population.get_tour(index))
 
         for index in range(elitism_offset, population_size):
             random_id = randint(0, 49)
             new_population.save_tour(index, pop.get_tour(random_id))
-
 
         population_crossover = Population(population_size, False)
 
