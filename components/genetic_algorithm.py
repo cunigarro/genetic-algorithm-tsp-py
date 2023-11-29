@@ -4,13 +4,13 @@ from components.tour import Tour
 import copy
 
 class GeneticAlgorithm:
-    mutation_rate = 0.015
+    mutation_rate = 0.02
     tournament_size = 5
     elitism = True
 
     @staticmethod
     def evolve_population(pop: Population):
-        population_size = 15
+        population_size = 25
         new_population = Population(population_size, True)
 
         elitism_offset = 0
@@ -29,17 +29,17 @@ class GeneticAlgorithm:
 
         population_mutation = Population(population_size, False)
 
-        for index in range(elitism_offset, 50):
-            GeneticAlgorithm.mutate(pop.get_tour(index))
+        for index in range(elitism_offset, population_size):
+            GeneticAlgorithm.mutate(new_population.get_tour(index))
 
         for index in range(0, population_size):
-            random_id = randint(0, 49)
-            population_mutation.save_tour(index, pop.get_tour(random_id))
+            random_id = randint(0, population_size - 1)
+            population_mutation.save_tour(index, new_population.get_tour(random_id))
 
         new_population.tours += population_mutation.tours
 
 
-        diverse_population = Population(20, True)
+        diverse_population = Population(25, True)
 
         new_population.tours += diverse_population.tours
 
