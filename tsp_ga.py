@@ -88,7 +88,7 @@ locations = [
 ]
 
 fittest_vals = []
-iterations = 200
+iterations = 500
 population = 50
 initial_distance = 0
 
