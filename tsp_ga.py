@@ -89,7 +89,7 @@ locations = [
 
 fittest_vals = []
 iterations = 100
-population = 50
+population = 75
 initial_distance = 0
 
 for location in locations:
