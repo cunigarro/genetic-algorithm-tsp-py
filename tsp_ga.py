@@ -118,6 +118,11 @@ y_lines = [location.get_y() for location in best_tour]
 
 fig, axs = plt.subplots(1, 2, figsize=(12, 6))
 
+print('Distancia inicial')
+print(initial_distance)
+print('Mejor distancia')
+print(pop.get_fittest().get_distance())
+
 # Primer gráfico: Comportamiento del algoritmo
 axs[0].plot(generations, fittest_vals)
 axs[0].set_title('Mejora de los individuos')
